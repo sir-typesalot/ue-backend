@@ -1,3 +1,4 @@
+# pylint: disable=missing-module-docstring
 # import pytest
 # from lib.models.UserModel import UserModel
 # from .data_populator import populate_tables
