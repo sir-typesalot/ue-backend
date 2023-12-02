@@ -26,8 +26,8 @@ jobs:
 
     - name: Run pylint
       run: |
-        pylint lib
-  
+        pylint tests/ lib/ app/models
+
   test:
     runs-on: ubuntu-latest
 
@@ -48,4 +48,3 @@ jobs:
     - name: Run pytest
       run: |
         pytest tests/ -vv
-  

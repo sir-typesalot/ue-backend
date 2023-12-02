@@ -1,43 +1,34 @@
+"""Module handling the population of DB tables for unit testing
+"""
 from .conftest import get_db
 
-def populate_dashboard_users():
+def populate_dashboard_user():
+    """Populate dashboard_user table
+    """
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO dashboard_users (username, email, password_hash, user_id, create_datetime) VALUES
-            ('test_user', 't@gmail.com', '$2y$04$Lfxl0lAeEvh1/ek62Z81Yuaq7h.Qa2oGxh9l7uItscmkMGaDIon.C', '9fe2c4e93f654fdbb24c02b15259716c', NOW())
+            INSERT INTO urban_eden.dashboard_user (username, pass_hash, create_datetime, is_active, clearance) VALUES
+            ('test_user', '$2y$04$Lfxl0lAeEvh1/ek62Z81Yuaq7h.Qa2oGxh9l7uItscmkMGaDIon.C', NOW(), true, 'standard');
         """)
 
-def populate_routine():
+def populate_portal_user():
+    """Populate portal_user table
+    """
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO routine (name, description, create_datetime, modify_datetime) VALUES
-            ('Test Routine', 'Just a test', NOW(), NOW()),
-            ('Routine 2', 'Testing the routine', NOW(), NOW())
-        """)
-
-def populate_exercises():
-    with get_db() as cursor:
-        cursor.execute("""
-            INSERT INTO exercises (name, is_unilateral, is_bodyweight, details) VALUES 
-            ('Bench Press', 0, 1, '{}'),
-            ('Pullup', 0, '1', '{}'),
-            ('Meadows Row', 1, 0, '{}')
-        """)
-
-def populate_routine_map():
-    with get_db() as cursor:
-        cursor.execute("""
-            INSERT INTO routine_user_map (routine_id, user_id, config) VALUES
-            (1, 1, ''),
-            (2, 1, '')
+            INSERT INTO portal_user (username, pass_hash, create_datetime, is_active) VALUES
+            ('test_user', '$2y$04$Lfxl0lAeEvh1/ek62Z81Yuaq7h.Qa2oGxh9l7uItscmkMGaDIon.C', NOW(), true)
         """)
 
 table_map = {
-    'dashboard_users': populate_dashboard_users,
-    'routine': populate_routine,
-    'exercises': populate_exercises,
-    'routine_map': populate_routine_map
+    'portal_user': populate_dashboard_user,
+    'dashboard_user': populate_portal_user
 }
 def populate_tables(tables: list):
+    """Populate tables for unit tests
+
+    Args:
+        tables (list): List of tables to populate
+    """
     for table in tables:
         table_map[table]()

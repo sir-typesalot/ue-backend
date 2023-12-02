@@ -20,9 +20,9 @@ def update_container_version():
     """
     Method to handle updating the container version in the JSON file.
     """
-    # TODO: May need to change this based on deployment process
+    # May need to change this based on deployment process
     os.chdir("./deploy")
-    with open('containers.json', 'r') as openfile:
+    with open('containers.json', 'r', encoding="utf-8") as openfile:
         # Reading from json file
         json_object = json.load(openfile)
 
@@ -32,9 +32,9 @@ def update_container_version():
     new_version = f"{version[0:-2]}{version_num+1}"
     json_object['flask']['image'] = new_version
 
-    with open("containers.json", "w") as outfile:
+    with open("containers.json", "w", encoding="utf-8") as outfile:
         json.dump(json_object, outfile)
-    
+
     print("Wrote new version to containers file")
 
 def deploy_container():

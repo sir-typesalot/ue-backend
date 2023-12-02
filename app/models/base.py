@@ -1,14 +1,17 @@
+"""Base model to data models
+"""
 import logging
-from lib.Scribe import Scribe
+from lib.handlers import CRUDWrapper
 
 logging.basicConfig(level = logging.INFO)
 
-class BaseModel(object):
-
+class BaseModel():
+    """Base model to data models
+    """
     def __init__(self):
         self.logger = logging.getLogger("base_logger")
-        self.db = Scribe()
-    
+        self.db = CRUDWrapper()
+
     def sanitize(self, data: dict, headers: list):
         """Sanitize raw data before passing into dataclass
 
@@ -18,9 +21,9 @@ class BaseModel(object):
 
         Returns:
             dict: Key->Values that conform to the dataclass
-        """        
+        """
         return {k: data[k] for k in headers}
-    
+
     def split(self, entity: dict):
         """Extract columns and values from an entity dict
 
@@ -29,7 +32,7 @@ class BaseModel(object):
 
         Returns:
             (tuple): Columns and Values in list forms
-        """        
+        """
         columns = list(entity.keys())
         values = list(entity.values())
         return columns, values
