@@ -2,7 +2,7 @@
 
 ## Prerequisites
 You will need to have python 3.8+ and have docker installed on your system.
-If you are trying to test running the container on a Windows machine, you would 
+If you are trying to test running the container on a Windows machine, you would
 likely need a Bash terminal (Git Bash isn't a bad option).
 
 ## Setup
@@ -14,12 +14,13 @@ likely need a Bash terminal (Git Bash isn't a bad option).
 - Install all the required packages - `pip install -r requirements.txt`
 
 ## Run Locally
-- To test the application without the container, just run - `python run.py -e local`
+- To test the application without the container, just run - `python run.py`
 - To run the app within a container run - `bash run_local.sh`
 
 ## Testing
-Go through the setup steps. Run `pytest tests/ -v` which will run the collection of tests and output the results. 
-To lint your code to make sure it keeps up with the PEP8 standards, run `pylint <path_to_file>`
+Go through the setup steps. Run `pytest tests/ -v` which will run the collection of tests and output the results.
+To lint your code to make sure it keeps up with the PEP8 standards, run `pylint <path_to_file or directory>`
+To better format your code, you can use `black <path_to_file>`.
 
 ## Contribution
 - Create a new branch for your changes - `git checkout -B <name_of_branch>`
