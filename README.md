@@ -1,7 +1,7 @@
-# Gym Journal
+# Urabn Eden Project
 
 ## Prerequisites
-You will need to have python 3.8+ and have docker installed on your system.
+You will need to have python 3.11.x and have Docker installed on your system.
 If you are trying to test running the container on a Windows machine, you would
 likely need a Bash terminal (Git Bash isn't a bad option).
 

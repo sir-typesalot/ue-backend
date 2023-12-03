@@ -1,12 +1,12 @@
 """Module that handles the wrappers and handlers for the DB connection
 """
 import logging
-from enum import Enum
+from lib.helpers.enum_base import EnumBase
 from lib.db import DB
 from app.config import Config
 
 
-class OperationType(Enum):
+class OperationType(EnumBase):
     """Enum class for query operation types
     """
     FETCH_ALL = "fetch_all"
