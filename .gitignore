@@ -36,3 +36,6 @@ virtualenv/
 # Creds
 credentials.json
 token.json
+
+# VSCode settings
+.vscode/
