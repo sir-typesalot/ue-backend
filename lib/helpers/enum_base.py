@@ -1,33 +1,39 @@
 """_summary_
 """
 from enum import Enum
-from abc import ABC, abstractmethod
+from abc import ABC, ABCMeta
 
-class BaseEnum(Enum, ABC):
-    """Abstract enum class to be utilized by child enum classes
+class AbstractEnumMeta(ABCMeta, type(Enum)):
+    """Meta abstract class for the abstract base class to inherit from
     """
 
-    @abstractmethod
-    def has_member_key(self, key):
-        """Check if enum has member
+class EnumBase(ABC, Enum, metaclass=AbstractEnumMeta):
+    """Base enumeration class for child classes to inherit from
+    """
+
+    @classmethod
+    def has_value(cls, value):
+        """Check if attribute exists in class
 
         Args:
-            key (str): Key to check
+            value (str): Attribute to check
 
         Returns:
-            bool: Whether key is in enum
+            bool: Whether it exists in class
         """
-        return key in self.__members__
+        return any(value == item.value for item in cls)
 
-    @abstractmethod
-    def get_member_key(self, key):
-        """Get the value of key from enum
+    @classmethod
+    def get_item(cls, search_item):
+        """Get specified item from class
 
         Args:
-            key (str): _description_
+            value (str): Key of value to return
 
         Returns:
-            str | None: Value or None if does not exist
+            any: Attribute
         """
-        key = self[key].value if self.has_member_key(key) else None
-        return key
+        for item in cls:
+            if search_item == item.value:
+                return item
+        return None

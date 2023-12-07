@@ -1,9 +1,9 @@
 """Dataclass Module
 """
+import json
 from dataclasses import dataclass, asdict
 from datetime import datetime
-from enum import Enum
-import json
+from lib.helpers.enum_base import EnumBase
 
 
 class BaseModel:
@@ -46,7 +46,7 @@ class PortalUser(BaseModel):
     is_active: bool
 
 
-class ClearanceLevel(str, Enum):
+class ClearanceLevel(EnumBase):
     """Enum class for clearance level
     """
     BASE = "standard"
@@ -65,7 +65,7 @@ class DashboardUser(BaseModel):
     clearance: ClearanceLevel
 
 
-class SourceTable(str, Enum):
+class SourceTable(EnumBase):
     """Enum class for source table
     """
     PORTAL = "portal_user"
