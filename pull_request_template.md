@@ -21,9 +21,8 @@ _Any screenshots related to the change?_
 
 ## Code Review Checklist
 
-- [] Has the GitHub build passed?
-- [] Is there any redundant code?
-- [] Could any optimization be applied?
+- [ ] Has the GitHub build passed?
+- [ ] Is there any redundant code?
+- [ ] Could any optimization be applied?
 
 ## [optional] Are there any post-deployment tasks we need to perform?
-
