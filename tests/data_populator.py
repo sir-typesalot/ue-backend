@@ -7,7 +7,7 @@ def populate_dashboard_user():
     """
     with get_db() as cursor:
         cursor.execute("""
-            INSERT INTO urban_eden.dashboard_user (username, pass_hash, create_datetime, is_active, clearance) VALUES
+            INSERT INTO dashboard_user (username, pass_hash, create_datetime, is_active, clearance) VALUES
             ('test_user', '$2y$04$Lfxl0lAeEvh1/ek62Z81Yuaq7h.Qa2oGxh9l7uItscmkMGaDIon.C', NOW(), true, 'standard');
         """)
 
@@ -21,8 +21,8 @@ def populate_portal_user():
         """)
 
 table_map = {
-    'portal_user': populate_dashboard_user,
-    'dashboard_user': populate_portal_user
+    'portal_user': populate_portal_user,
+    'dashboard_user': populate_dashboard_user
 }
 def populate_tables(tables: list):
     """Populate tables for unit tests

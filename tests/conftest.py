@@ -20,7 +20,7 @@ def db():
     """
     Config.SCHEMA = "_test_db"
     yield
-    tables = ["portal_user", "dashboard_user", "garden", "garden_group"]
+    tables = ["portal_user"]
     with get_db() as cursor:
         cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
         for table in tables:

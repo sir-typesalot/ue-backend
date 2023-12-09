@@ -2,10 +2,11 @@
 """
 # pylint: disable=unused-import
 from datetime import datetime
-import uuid
 import bcrypt
+from mysql.connector.errors import ProgrammingError
 from app.models.base import BaseModel
 from lib.dataclass_models import PortalUser
+import lib.helpers.dataclass_helpers as helpers
 
 class PortalUserModel(BaseModel):
     """Data model for the Portal user
@@ -15,20 +16,33 @@ class PortalUserModel(BaseModel):
         super().__init__()
         self.id = None
 
-    # def create(self, username: str, email: str, pw: str):
-    #     # Create user id and hash
-    #     user_id = uuid.uuid4().hex
-    #     password = self.create_password(pw)
-    #     # Create dataclass and convert to dict
-    #     user = User(username, email, password, datetime.now(), user_id).dict()
-    #     try:
-    #         # Derive columns and values from dict
-    #         columns, values = self.split(user)
-    #         id = self.db.insert('dashboard_users', columns, values)
-    #         return id
-    #     except:
-    #         # add logging at some point
-    #         print("Unable to create user")
+    def create(self, username: str, pw: str) -> int:
+        """Create a new portal user
+
+        Args:
+            username (str): Username of new user
+            pw (str): Password of new user
+
+        Returns:
+            int: User ID of created user
+        """
+        password = self.create_password(pw)
+        # Create dataclass and convert to dict
+        user = PortalUser(
+            username=username,
+            pass_hash=password,
+            create_datetime=datetime.now()
+        )
+        user = helpers.to_dict(user)
+        try:
+            # Exctract columns and values from dict
+            columns, values = self.split(user)
+            self.id = self.db.insert('portal_user', columns, values)
+        except ProgrammingError as e:
+            # add logging at some point
+            print(f"Unable to create user - {e}")
+
+        return self.id
 
     def user_exists(self, user_id: str):
         """Check if a user exists
@@ -39,7 +53,7 @@ class PortalUserModel(BaseModel):
         Returns:
             bool: Whether user exists
         """
-        data = self.get({'user_id': user_id})
+        data = self.get({'id': user_id})
         return bool(data)
 
     def get(self, search_term: dict):
@@ -56,7 +70,7 @@ class PortalUserModel(BaseModel):
             return None
 
         self.id = user['id']
-        user = self.sanitize(user, PortalUser.attributes())
+        user = self.sanitize(user, helpers.attributes(PortalUser))
         return PortalUser(**user)
 
     def create_password(self, pw: str):

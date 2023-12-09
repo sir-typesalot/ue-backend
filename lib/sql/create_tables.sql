@@ -14,7 +14,7 @@ CREATE TABLE `dashboard_user` (
 	`pass_hash` VARCHAR(255) NOT NULL,
 	`create_datetime` DATETIME DEFAULT (CURRENT_TIMESTAMP),
 	`is_active` BOOLEAN DEFAULT (true) NOT NULL,
-	`clearance` ENUM('standard', 'master', 'super') DEFAULT ('standard') NOT NULL
+	`clearance` ENUM('base', 'medium', 'high') DEFAULT ('base') NOT NULL
 );
 
 CREATE TABLE `garden` (

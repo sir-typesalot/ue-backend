@@ -1,68 +1,40 @@
 """Dataclass Module
 """
-import json
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from datetime import datetime
+from decimal import Decimal
 from lib.helpers.enum_base import EnumBase
 
-
-class BaseModel:
-    """Base model for dataclasses
-    """
-    def dict(self):
-        """Returns a dict representation of the dataclass
-
-        Returns:
-            dict: Dataclass attributes
-        """
-        return {k: str(v) for k, v in asdict(self).items()}
-
-    def to_json(self, field: dict):
-        """Converts a dict to a JSON object
-
-        Returns:
-            str: JSON object
-        """
-        return json.dumps(field)
-
-    @classmethod
-    def attributes(cls):
-        """Return a list of the dataclass attributes
-
-        Returns:
-            list: Attributes of the dataclass
-        """
-        return list(cls.__annotations__.keys())
-
 @dataclass
-class PortalUser(BaseModel):
+class PortalUser:
     """Portal User Dataclass
     """
     username: str
-    email: str
     pass_hash: str
     create_datetime: datetime
-    update_datetime: datetime
-    is_active: bool
+    update_datetime: datetime = None
+    is_active: bool = True
+    id: int = None
 
 
 class ClearanceLevel(EnumBase):
     """Enum class for clearance level
     """
-    BASE = "standard"
-    MASTER = "master"
-    SUPER = "super"
+    BASE = "base"
+    MID = "medium"
+    HIGH = "high"
 
 
 @dataclass
-class DashboardUser(BaseModel):
+class DashboardUser:
     """Dasboard User Dataclass
     """
     username: str
     pass_hash: str
     create_datetime: datetime
-    is_active: bool
-    clearance: ClearanceLevel
+    is_active: bool = True
+    id: int = None
+    clearance: ClearanceLevel = None
 
 
 class SourceTable(EnumBase):
@@ -72,10 +44,50 @@ class SourceTable(EnumBase):
     DASHBOARD = "dashboard_user"
 
 @dataclass
-class UserContact(BaseModel):
+class UserContact:
     """User Contact Dataclass
     """
     user_id: int
     source_table: SourceTable
-    email: str
-    phone: int
+    email: str = None
+    phone: int = None
+
+@dataclass
+# pylint: disable=too-many-instance-attributes
+class Garden:
+    """Garden Dataclass
+    """
+    name: str
+    state: str
+    zip: str
+    sq_ft: int
+    plot_count: int
+    address1: str
+    address2: str = None
+    lat: Decimal = None
+    lng: Decimal = None
+    is_active: bool = True
+    id: int = None
+
+@dataclass
+class CustomContent:
+    """Custom Content Dataclass
+    """
+    garden_id: int
+    open_hours: dict = None
+    contact_email: str = None
+    contact_phone: int = None
+
+@dataclass
+class GardenAdmin:
+    """Garden Admin Dataclass
+    """
+    garden_id: int
+    admin_id: int
+
+@dataclass
+class GardenGroup:
+    """Garden Group Dataclass
+    """
+    user_id: int
+    garden_id: int
