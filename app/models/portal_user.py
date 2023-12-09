@@ -3,10 +3,10 @@
 # pylint: disable=unused-import
 from datetime import datetime
 import bcrypt
+from mysql.connector.errors import ProgrammingError
 from app.models.base import BaseModel
 from lib.dataclass_models import PortalUser
 import lib.helpers.dataclass_helpers as helpers
-from mysql.connector.errors import ProgrammingError
 
 class PortalUserModel(BaseModel):
     """Data model for the Portal user
