@@ -1,42 +1,36 @@
-# pylint: disable=missing-module-docstring
-# import pytest
-# from lib.models.UserModel import UserModel
-# from .data_populator import populate_tables
+# pylint: disable=missing-module-docstring, unused-argument, unused-import
+# pylint: disable=missing-function-docstring
+import pytest
+from app.models.portal_user import PortalUserModel
+from .data_populator import populate_tables
 
-def test_sample():
-    """Placeholder for unit tests
-    """
-    result = 3*2
-    assert result == 6
+def test_create_user(db):
+    user_id = PortalUserModel().create(
+        'test_user',
+        'justapass'
+    )
+    assert user_id == 1
 
-# def test_create_user(db):
-#     user_id = UserModel().create(
-#         'test_user',
-#         't@gmail.com',
-#         'justapass'
-#     )
-#     assert user_id == 1
+@pytest.mark.parametrize("user_id, expected", [
+    (1, True),
+    (2, False)
+])
+def test_user_exists(db, user_id, expected):
+    populate_tables(['portal_user'])
+    exists = PortalUserModel().user_exists(user_id)
+    assert exists is expected
 
-# @pytest.mark.parametrize("user_id, expected", [
-#     ('9fe2c4e93f654fdbb24c02b15259716c', True),
-#     ('28374bd3hdb33738db', False)
-# ])
-# def test_user_exists(db, user_id, expected):
-#     populate_tables(['dashboard_users'])
-#     exists = UserModel().user_exists(user_id)
-#     assert exists is expected
-
-# @pytest.mark.parametrize("user_id, expected", [
-#     ('9fe2c4e93f654fdbb24c02b15259716c', 'test_user'),
-#     ('28374bd3hdb33738db', None)
-# ])
-# def test_get_user(db, user_id, expected):
-#     populate_tables(['dashboard_users'])
-#     user = UserModel().get({'user_id': user_id})
-#     if user:
-#         assert user.username == expected
-#     else:
-#         assert user is None
+@pytest.mark.parametrize("user_id, expected", [
+    (1, 'test_user'),
+    (2, None)
+])
+def test_get_user(db, user_id, expected):
+    populate_tables(['portal_user'])
+    user = PortalUserModel().get({'id': user_id})
+    if user:
+        assert user.username == expected
+    else:
+        assert user is None
 
 # @pytest.mark.parametrize("username,password,expected", [
 #     ('test_user','justapass', True),

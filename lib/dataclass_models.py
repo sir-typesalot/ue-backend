@@ -1,51 +1,20 @@
 """Dataclass Module
 """
-import json
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 from lib.helpers.enum_base import EnumBase
 
-
-class BaseModel:
-    """Base model for dataclasses
-    """
-    def dict(self):
-        """Returns a dict representation of the dataclass
-
-        Returns:
-            dict: Dataclass attributes
-        """
-        return {k: str(v) for k, v in asdict(self).items()}
-
-    def to_json(self, field: dict):
-        """Converts a dict to a JSON object
-
-        Returns:
-            str: JSON object
-        """
-        return json.dumps(field)
-
-    @classmethod
-    def attributes(cls):
-        """Return a list of the dataclass attributes
-
-        Returns:
-            list: Attributes of the dataclass
-        """
-        return list(cls.__annotations__.keys())
-
 @dataclass
-class PortalUser(BaseModel):
+class PortalUser:
     """Portal User Dataclass
     """
-    id: int
     username: str
-    email: str
     pass_hash: str
     create_datetime: datetime
     update_datetime: datetime = None
-    is_active: bool
+    is_active: bool = True
+    id: int = None
 
 
 class ClearanceLevel(EnumBase):
@@ -57,15 +26,15 @@ class ClearanceLevel(EnumBase):
 
 
 @dataclass
-class DashboardUser(BaseModel):
+class DashboardUser:
     """Dasboard User Dataclass
     """
-    id: int
     username: str
     pass_hash: str
     create_datetime: datetime
-    is_active: bool
-    clearance: ClearanceLevel
+    is_active: bool = True
+    id: int = None
+    clearance: ClearanceLevel = None
 
 
 class SourceTable(EnumBase):
@@ -75,7 +44,7 @@ class SourceTable(EnumBase):
     DASHBOARD = "dashboard_user"
 
 @dataclass
-class UserContact(BaseModel):
+class UserContact:
     """User Contact Dataclass
     """
     user_id: int
@@ -85,23 +54,23 @@ class UserContact(BaseModel):
 
 @dataclass
 # pylint: disable=too-many-instance-attributes
-class Garden(BaseModel):
+class Garden:
     """Garden Dataclass
     """
-    id: int
     name: str
-    address1: str
-    address2: str
     state: str
     zip: str
-    sq_ft: int = None
-    plot_count: int = None
+    sq_ft: int
+    plot_count: int
+    address1: str
+    address2: str = None
     lat: Decimal = None
     lng: Decimal = None
-    is_active: bool
+    is_active: bool = True
+    id: int = None
 
 @dataclass
-class CustomContent(BaseModel):
+class CustomContent:
     """Custom Content Dataclass
     """
     garden_id: int
@@ -110,14 +79,14 @@ class CustomContent(BaseModel):
     contact_phone: int = None
 
 @dataclass
-class GardenAdmin(BaseModel):
+class GardenAdmin:
     """Garden Admin Dataclass
     """
     garden_id: int
     admin_id: int
 
 @dataclass
-class GardenGroup(BaseModel):
+class GardenGroup:
     """Garden Group Dataclass
     """
     user_id: int
