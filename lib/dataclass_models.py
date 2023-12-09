@@ -3,6 +3,7 @@
 import json
 from dataclasses import dataclass, asdict
 from datetime import datetime
+from decimal import Decimal
 from lib.helpers.enum_base import EnumBase
 
 
@@ -38,26 +39,28 @@ class BaseModel:
 class PortalUser(BaseModel):
     """Portal User Dataclass
     """
+    id: int
     username: str
     email: str
     pass_hash: str
     create_datetime: datetime
-    update_datetime: datetime
+    update_datetime: datetime = None
     is_active: bool
 
 
 class ClearanceLevel(EnumBase):
     """Enum class for clearance level
     """
-    BASE = "standard"
-    MASTER = "master"
-    SUPER = "super"
+    BASE = "base"
+    MID = "medium"
+    HIGH = "high"
 
 
 @dataclass
 class DashboardUser(BaseModel):
     """Dasboard User Dataclass
     """
+    id: int
     username: str
     pass_hash: str
     create_datetime: datetime
@@ -77,5 +80,45 @@ class UserContact(BaseModel):
     """
     user_id: int
     source_table: SourceTable
-    email: str
-    phone: int
+    email: str = None
+    phone: int = None
+
+@dataclass
+# pylint: disable=too-many-instance-attributes
+class Garden(BaseModel):
+    """Garden Dataclass
+    """
+    id: int
+    name: str
+    address1: str
+    address2: str
+    state: str
+    zip: str
+    sq_ft: int = None
+    plot_count: int = None
+    lat: Decimal = None
+    lng: Decimal = None
+    is_active: bool
+
+@dataclass
+class CustomContent(BaseModel):
+    """Custom Content Dataclass
+    """
+    garden_id: int
+    open_hours: dict = None
+    contact_email: str = None
+    contact_phone: int = None
+
+@dataclass
+class GardenAdmin(BaseModel):
+    """Garden Admin Dataclass
+    """
+    garden_id: int
+    admin_id: int
+
+@dataclass
+class GardenGroup(BaseModel):
+    """Garden Group Dataclass
+    """
+    user_id: int
+    garden_id: int
