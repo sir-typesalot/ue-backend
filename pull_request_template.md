@@ -7,22 +7,20 @@ _Hyperlink URLs, use `[title](url)`_
 ## Screenshots
 _Any screenshots related to the change?_
 
-## Added tests?
+## Checklist
 
-- [ ] Yes
-- [ ] No, because they aren't needed
-- [ ] No, because I need help
+- [ ] All existing tests pass
+- [ ] I have tested the changes locally
+- [ ] I have added new tests to cover the changes (if applicable)
+- [ ] Documentation has been updated (if applicable)
 
-## Added to documentation?
+## Reviewer Checklist
 
-- [ ] 📃 README.md
-- [ ] 📜 Docs
-- [ ] 🚫 No documentation needed
-
-## Code Review Checklist
-
-- [ ] Has the GitHub build passed?
-- [ ] Is there any redundant code?
-- [ ] Could any optimization be applied?
+- [ ] Code structure
+- [ ] Code readability/maintainability
+- [ ] Code optimization
+- [ ] Logic correctness
+- [ ] Error handling
+- [ ] Security considerations
 
 ## [optional] Are there any post-deployment tasks we need to perform?
