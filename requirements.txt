@@ -27,5 +27,5 @@ tomli==2.0.1
 tomlkit==0.12.3
 typing_extensions==4.8.0
 waitress==2.1.2
-Werkzeug==2.3.8
+Werkzeug==3.0.3
 zipp==3.12.0
